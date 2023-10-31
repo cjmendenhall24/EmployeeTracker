@@ -53,4 +53,25 @@ VALUE ("Lawyer", 190000, 4);
 INSERT INTO role (title, salary, department_id)
 VALUE ("Sales Lead", 100000, 1);
 
-INSERT INTO employee
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("John", "Doe", null, 1);
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Mike", "Chan", 1, 2);
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Ashley", "Rodriguez", null, 3);
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Kevin", "Tupik", 3, 4);
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Kunal", "Singh", null, 5);
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Malia", "Brown", 5, 6);
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Sarah", "Lourd", null, 7);
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Tom", "Allen", 7, 8);
+INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Sam", "Kash", 3, 9);
+
+SELECT * FROM department;
+SELECT * FROM role;
+SELECT * FROM employee;
