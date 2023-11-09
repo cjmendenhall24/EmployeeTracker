@@ -171,3 +171,94 @@ function addEmployee() {
     });
 };
 
+function addRole() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "roleTitle",
+            message: "New role title?"
+        },
+        {
+            type: "input",
+            name: "roleSalary",
+            message: "Salary for the new role?"
+        },
+        {
+            type: "input",
+            name: "departmentId",
+            message: "Department ID for the new role?"
+        },
+    ])
+    .then(function (answer) {
+        var query = `INSERT INTO role SET ?`
+        connection.query(query, {
+            title: answer.roleTitle,
+            salary: answer.roleSalary,
+            department_id: answer.departmentId
+        },
+        function (err, res) {
+            if (err) throw err;
+            console.log("Role added");
+            beginPrompt();
+        });
+    });
+};
+
+function updateEmployee() {
+    connection.query("SELECT * FROM employee", function (err, employees) {
+        if (err) throw err;
+        const roleChoices = roles.map((role) => role.title);
+
+        const employeeChoices = employees.map((employee) => ({
+            name: `${employee.first_name} ${employee.last_name}`,
+            value: employee.id
+        }));
+
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "employeeId",
+                message: "Select the employee to update:",
+                choices: employeeChoices
+            },
+            {
+                type: "input",
+                name: "newFirstName",
+                message: "Enter the new first name (or press Enter to keep the current name):"
+            },
+            {
+                type: "input",
+                name: "newLastName",
+                message: "Enter the new last name (or press Enter to keep the current name):"
+            },
+            {
+                type: "list",
+                name: "newRoleId",
+                message: "Select the new role:",
+                choices: roleChoices
+            },
+            {
+                type: "list",
+                name: "newManagerId",
+                message: "Select the new manager (or press Enter to keep the current manager):",
+                choices: managerChoices
+            },
+        ])
+        .then(function (answer) {
+            const query = `UPDATE employee 
+                           SET first_name = COALESCE(?, first_name), 
+                               last_name = COALESCE(?, last_name),
+                               role_id = ?,
+                               manager_id = COALESCE(?, manager_id)
+                           WHERE id = ?`;
+
+            connection.query(query, [answer.newFirstName, answer.newLastName, answer.newRoleId, answer.newManagerId, answer.employeeId],
+                function (err, res) {
+                    if (err) throw err;
+                    console.log("Employee updated");
+                    beginPrompt();
+                });
+        });
+    });
+};
+
