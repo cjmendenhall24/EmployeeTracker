@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS employeeTrackerDB;
-CREATE DATABASE employeeTrackerDB
-USE employeeTrackerDB
+CREATE DATABASE employeeTrackerDB;
+USE employeeTrackerDB;
 
 CREATE TABLE department (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -24,6 +24,7 @@ CREATE TABLE employee (
     FOREIGN KEY (role_id) REFERENCES role(id),
     FOREIGN KEY (manager_id) REFERENCES employee(id)
 );
+USE DATABASE employeeTrackerDB;
 
 INSERT INTO department (name)
 VALUE ("Sales");
